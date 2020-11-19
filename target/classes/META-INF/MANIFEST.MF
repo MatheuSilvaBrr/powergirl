@@ -1,10 +1,5 @@
 Manifest-Version: 1.0
-Implementation-Title: powergirl
-Implementation-Version: 0.0.1-SNAPSHOT
 Built-By: mathe
-Implementation-Vendor-Id: unicesumar.powergilr
-Build-Jdk: 1.8.0_261
-Implementation-URL: http://projects.spring.io/spring-boot/powergirl/
+Build-Jdk: 1.8.0_271
 Created-By: Maven Integration for Eclipse
-Implementation-Vendor: Pivotal Software, Inc.
 

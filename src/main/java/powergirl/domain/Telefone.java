@@ -10,27 +10,18 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "telefone")
-public class Telefone {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+public class Telefone extends BaseEntity{
 	
 	@NotNull
-	@NotBlank(message="Número de telefone é obrigatório") 
+	@NotBlank(message="NÃºmero de telefone Ã© obrigatÃ³rio") 
 	private String numero;
+	
+	@NotNull
+	private String nome;
 
 	public Telefone(String numero) {
 		super();
 		this.numero = numero;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public String getNumero() {

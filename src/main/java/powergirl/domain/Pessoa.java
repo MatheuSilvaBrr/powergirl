@@ -7,10 +7,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -19,42 +17,40 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "pessoa")
-public class Pessoa {
+public class Pessoa extends BaseEntity{
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	
 	@NotBlank(message = "Nome deve ser obrigatÃ³rio")
 	@Column(name = "nome", nullable = false)
 	private String nome;
 	
+	@NotNull(message = "Telefone ï¿½ obrigatï¿½rio")
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<Telefone> telefones;
 	
-	@NotNull(message = "Telefone é obrigatório")
-	@Column(name = "telefone_id", nullable = false)
-	@OneToOne(cascade = CascadeType.ALL)
-	private Telefone numeroTelefone;
+	@NotNull
+	@ManyToOne
+	private Telefone telefonesEmergencia;
 	
-	@NotBlank
-	@OneToMany(mappedBy = "pessoa")
-	@JoinColumn(name =  "pessoa_id")
-	private List<TelefoneEmergencia> telefonesEmergencia;
+	@NotNull
+	@ManyToOne
+	private Endereco endereco;
 
-	public Pessoa(String nome, Telefone numeroTelefone) {
+	public Pessoa(String nome, Endereco endereco, Telefone telefoneEmergencia) {
 		this.nome = nome;
-		this.numeroTelefone = numeroTelefone;
-		this.telefonesEmergencia = new ArrayList<TelefoneEmergencia>();
+		this.telefonesEmergencia = telefoneEmergencia;
+		this.telefones = new ArrayList<Telefone>();
+		this.endereco = endereco;
+	}
+	public Pessoa() {
+		super();
 	}
 	
-
-	public Long getId() {
-		return id;
+	public Endereco getEndereco() {
+		return endereco;
 	}
-
-	public void setId(Long id) {
-		this.id = id;
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
 	}
-
 	public String getNome() {
 		return nome;
 	}
@@ -63,11 +59,11 @@ public class Pessoa {
 		this.nome = nome;
 	}
 
-	public List<TelefoneEmergencia> getTelefonesEmergencia() {
-		return Collections.unmodifiableList(telefonesEmergencia);
+	public List<Telefone> getTelefones() {
+		return Collections.unmodifiableList(telefones);
 	}
 	
-	public void adicionarTelefoneEmergial(TelefoneEmergencia telefoneEmergencia){
-		this.telefonesEmergencia.add(telefoneEmergencia);
+	public void adicionarTelefone(Telefone telefone){
+		this.telefones.add(telefone);
 	}
 }
